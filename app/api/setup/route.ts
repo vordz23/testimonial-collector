@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { prisma } from "@/lib/db";
@@ -20,6 +20,7 @@ export async function POST() {
 
     return NextResponse.json({ success: true, embedToken });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: "Setup failed" }, { status: 500 });
   }
 }
