@@ -5,27 +5,21 @@ import { randomBytes } from "crypto";
 const prisma = new PrismaClient();
 
 async function main() {
-  const existingAdmin = await prisma.admin.findUnique({
+  const passwordHash = await bcrypt.hash("admin123", 10);
+  const embedToken = randomBytes(32).toString("hex");
+
+  await prisma.admin.upsert({
     where: { id: "admin" },
+    update: { passwordHash, embedToken },
+    create: {
+      id: "admin",
+      passwordHash,
+      embedToken,
+    },
   });
 
-  if (!existingAdmin) {
-    const passwordHash = await bcrypt.hash("admin123", 10);
-    const embedToken = randomBytes(32).toString("hex");
-
-    await prisma.admin.create({
-      data: {
-        id: "admin",
-        passwordHash,
-        embedToken,
-      },
-    });
-
-    console.log("Admin user created with password: admin123");
-    console.log("Embed token:", embedToken);
-  } else {
-    console.log("Admin already exists");
-  }
+  console.log("Admin user created/updated with password: admin123");
+  console.log("Embed token:", embedToken);
 }
 
 main()
