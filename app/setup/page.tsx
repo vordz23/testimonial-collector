@@ -5,8 +5,7 @@ import { prisma } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-async function setup() {
-  "use server";
+export default async function SetupPage() {
   const passwordHash = await bcrypt.hash("admin123", 10);
   const embedToken = randomBytes(32).toString("hex");
 
@@ -21,9 +20,4 @@ async function setup() {
   });
 
   redirect("/admin");
-}
-
-export default async function SetupPage() {
-  await setup();
-  return null;
 }
