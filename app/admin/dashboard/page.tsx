@@ -2,6 +2,8 @@ import { prisma } from "@/lib/db";
 import AdminTable from "@/components/AdminTable";
 import { LogoutButton } from "@/components/LogoutButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   const testimonials = await prisma.testimonial.findMany({
     orderBy: { createdAt: "desc" },

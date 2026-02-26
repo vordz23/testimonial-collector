@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function POST() {
   try {
     const passwordHash = await bcrypt.hash("admin123", 10);

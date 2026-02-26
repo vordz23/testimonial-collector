@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { EmbedCode } from "@/components/EmbedCode";
 
+export const dynamic = "force-dynamic";
+
 export default async function WidgetPage() {
   const admin = await prisma.admin.findUnique({
     where: { id: "admin" },
